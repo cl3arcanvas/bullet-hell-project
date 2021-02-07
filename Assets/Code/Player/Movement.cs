@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private Animator anim;
     private bool isMoving = false;
     [SerializeField] private Spellbook book;
-
+    private bool dashing = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +22,17 @@ public class Movement : MonoBehaviour
     private void Update()
     {
 
-        anim.SetBool("Running", isMoving);
         isMoving = movementVector != Vector2.zero;
+
+
+        anim.SetBool("Running", isMoving);
+        
 
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        if (dashing)
+            book.enabled = false;
 
-        if (Input.GetButtonDown("Jump")) 
-        {
-            rb.AddForce(new Vector2(100, 0), ForceMode2D.Impulse);
-        }
 
         book.AngleCheck(right, left, top, bottom);
 
@@ -42,7 +43,8 @@ public class Movement : MonoBehaviour
     void FixedUpdate()
     {
         // TODO: dodging, 
-        rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
+        if (!dashing)
+            rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
     }
 
     void top() 
@@ -51,14 +53,12 @@ public class Movement : MonoBehaviour
         anim.SetInteger("DirectionY", 1);
         anim.SetInteger("DirectionX", 0);
     }
-
     void bottom() {
        
         book.bookSpr.sortingOrder = 2;
         anim.SetInteger("DirectionY", -1);
         anim.SetInteger("DirectionX", 0);
     }
-
     void right() {
         book.bookSpr.sortingOrder = 2;
         anim.SetInteger("DirectionX", 1);

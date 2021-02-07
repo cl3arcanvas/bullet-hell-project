@@ -7,21 +7,19 @@ public class Spellbook : MonoBehaviour
 
     // spellbook rotation
     [SerializeField] private Transform spellbook; // the spellbook transform
-    Vector3 mousePos; // the mouse position
+    [HideInInspector] public Vector3 mousePos; // the mouse position
     [SerializeField] private Camera mainCam; // the main camera
-    [SerializeField] public SpriteRenderer playerSpr; 
+    [SerializeField] private SpriteRenderer playerSpr; 
     [SerializeField] public SpriteRenderer bookSpr;
+    [HideInInspector] public float angle;
     public delegate void noRetNoPams();
 
     // shooting
-
     [SerializeField] private Transform ShootPoint;
-    [SerializeField] private float timeBtwShot = 0.5f;
+    [SerializeField] private float timeBtwShot = 0.3f;
     private float currentTimeBtwShot;
     [SerializeField] private GameObject bullet;
-    [HideInInspector] public bool top;
-    [HideInInspector] public bool right;
-    [HideInInspector] public float angle;
+    
 
     private void Start()
     {
@@ -35,7 +33,7 @@ public class Spellbook : MonoBehaviour
 
         #region Rotation
         mousePos = mainCam.ScreenToWorldPoint(Input.mousePosition); // the players mouse in in-game world units
-        Vector2 lookDir = mousePos - transform.position; // the difference between the mouse Postion and the spellbook position
+        Vector2 lookDir = mousePos - playerSpr.gameObject.transform.position; // the difference between the mouse Postion and the player position
         angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg; // the angle that the spellbook should point to in degrees
         spellbook.rotation = Quaternion.Euler(0, 0, angle); // rotate the spellbook
         #endregion
