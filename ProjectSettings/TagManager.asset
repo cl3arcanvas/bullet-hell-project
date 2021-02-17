@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - PlayerBullet
+  - Walk
+  - CollisionLedge
   layers:
   - Default
   - TransparentFX
@@ -18,9 +20,9 @@ TagManager:
   - Player
   - Wall
   - IgnoreBullet
-  - 
-  - 
-  - 
+  - CollisionLedge
+  - Void
+  - Walk
   - 
   - 
   - 

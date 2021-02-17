@@ -9,7 +9,7 @@ public class Spellbook : MonoBehaviour
     [SerializeField] private Transform spellbook; // the spellbook transform
     [HideInInspector] public Vector3 mousePos; // the mouse position
     [SerializeField] private Camera mainCam; // the main camera
-    [SerializeField] private SpriteRenderer playerSpr; 
+    [SerializeField] public SpriteRenderer playerSpr; 
     [SerializeField] public SpriteRenderer bookSpr;
     [HideInInspector] public float angle;
     public delegate void noRetNoPams();
@@ -23,7 +23,7 @@ public class Spellbook : MonoBehaviour
 
     private void Start()
     {
-        currentTimeBtwShot = timeBtwShot;
+        currentTimeBtwShot = 0;
     }
 
     // Update is called once per frame
@@ -39,14 +39,20 @@ public class Spellbook : MonoBehaviour
         #endregion
 
         #region Shooting
-        if (Input.GetButton("Fire1") && currentTimeBtwShot <= 0)
+        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0)
         {
+            bookSpr.enabled = true;
             Instantiate(bullet, ShootPoint.position, spellbook.rotation);
             currentTimeBtwShot = timeBtwShot;
         }
         else
         {
             currentTimeBtwShot -= Time.deltaTime;
+        }
+
+        if (currentTimeBtwShot <= 0)
+        {
+            bookSpr.enabled = false;
         }
         #endregion
 
@@ -55,14 +61,13 @@ public class Spellbook : MonoBehaviour
         #region Visuals
         if (((angle > 95 && angle < 175) || (angle < -95 && angle > -175))) // left
         {
-            playerSpr.flipX = true;
             spellbook.localScale = new Vector3(spellbook.localScale.x, -Mathf.Abs(spellbook.localScale.y), -1);
             spellbook.localPosition = new Vector3(-Mathf.Abs(spellbook.localPosition.x), spellbook.localPosition.y);
 
         }
         else if (((angle < 85 && angle > 5) || (angle > -85 && angle < -5))) // right
         {
-            playerSpr.flipX = false;
+            
             spellbook.localScale = new Vector3(spellbook.localScale.x, Mathf.Abs(spellbook.localScale.y), -1);
             spellbook.localPosition = new Vector3(Mathf.Abs(spellbook.localPosition.x), spellbook.localPosition.y);
         }
