@@ -14,15 +14,13 @@ public class Movement : MonoBehaviour, IDamageable
     [SerializeField] private float speed = 5f;
     [SerializeField] private Animator anim;
     private bool isMoving = false;
-    [SerializeField] private int maxHealth;
-    [HideInInspector] public int health;
-    [SerializeField] public bool dead = false;
+    private bool stopMoving = false;
 
     // Dashing
     private bool dashing = false;
-    [SerializeField] private float dashForce = 10;
+    //[SerializeField] private float dashForce = 10;
     private Vector2 mouseLoc = new Vector2();
-    [SerializeField] private float dashMultiplier = 2;
+    //[SerializeField] private float dashMultiplier = 2;
     [SerializeField] private float dashTime = 0.1f;
     [SerializeField] private float timeBtwDash = 0.5f;
     private bool movementOverAngle = true;
@@ -35,7 +33,9 @@ public class Movement : MonoBehaviour, IDamageable
     [SerializeField] private Transform feetpos;
     [SerializeField] private LayerMask walk;
     [SerializeField] private LayerMask edge;
-
+    [SerializeField] private int maxHealth;
+    [HideInInspector] public int health;
+    [SerializeField] public bool dead = false;
 
     // Visuals
     [SerializeField] private GameObject shadows;
@@ -52,11 +52,34 @@ public class Movement : MonoBehaviour, IDamageable
 
     private void Update()
     {
-        anim.SetInteger("DirectionX", (int)movementVector.x);
-        anim.SetInteger("DirectionY", (int)movementVector.y);
+        if (movementOverAngle)
+        {
+            anim.SetInteger("DirectionX", (int)movementVector.x);
+            anim.SetInteger("DirectionY", (int)movementVector.y);
+            if (movementVector.x < 0) 
+            {
+                book.playerSpr.flipX = true;
+            } else if (movementVector.x > 0) 
+            {
+                book.playerSpr.flipX = false;
+            }
+
+        } 
+
+
+        
+        if (Input.GetButtonDown("Fire1") && book.gameObject.activeSelf == true)
+        {
+            movementOverAngle = false;
+            book.AngleCheck(right, left, top, bottom);
+            Invoke("SetMovementOverAngle", 0.5f);
+        }
+
+
 
         if (touchingCollisionEdge && !touchingWalk && !dashing) 
         {
+            stopMoving = true;
             shadows.SetActive(false);
             Invoke("Die", 0.5f);
         }
@@ -81,7 +104,7 @@ public class Movement : MonoBehaviour, IDamageable
         {
             if (!dashing && Input.GetKeyDown(KeyCode.Space))
             {
-                dashing = true;
+                //dashing = true;
                 Invoke("EndDash", dashTime);
                 mouseLoc = (Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2)).normalized;
                 currentTimeBtwDash = timeBtwDash;
@@ -92,6 +115,23 @@ public class Movement : MonoBehaviour, IDamageable
         }
         
 
+        
+
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+       
+    }
+
+    void FixedUpdate()
+    {
+        // TODO: Dashing, 
+        if (!dashing && !stopMoving)
+        {
+            shadows.SetActive(true);
+            anim.enabled = true;
+            rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
+            book.enabled = true;
+        }
+        /*
         if (dashing)
         {
             //shadows.SetActive(false);
@@ -101,29 +141,7 @@ public class Movement : MonoBehaviour, IDamageable
             gameObject.layer = 13;
             transform.position = Vector3.MoveTowards(transform.position, mouseLoc * dashForce, step);
         }
-
-        if (Input.GetButtonDown("Fire1") && movementOverAngle)
-        {
-            book.AngleCheck(right, left, top, bottom);
-        }
-
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-       
-    }
-
-    void FixedUpdate()
-    {
-        // TODO: Dashing, 
-        if (!dashing)
-        {
-            shadows.SetActive(true);
-            anim.enabled = true;
-            rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
-            book.enabled = true;
-        }
-            
-        else
-            rb.velocity = Vector2.zero;
+        */
     }
 
     void Die() 
@@ -140,6 +158,11 @@ public class Movement : MonoBehaviour, IDamageable
     void ReloadScene() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    void SetMovementOverAngle() 
+    {
+        movementOverAngle = true;
     }
 
     void EndDash() 

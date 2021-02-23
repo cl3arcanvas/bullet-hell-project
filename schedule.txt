@@ -1,6 +1,6 @@
 List of things needed to be accomplished + priority:
 
-Febuary 7 - 16th: Finishing Player Features
+Febuary 7 - 20th: Finishing Player Features
 
 	Dashing - Done
 	Movement - Done
@@ -9,19 +9,15 @@ Febuary 7 - 16th: Finishing Player Features
 	Damage Function and Interface - Done
 	UI - Not Done
 
-Febuary 17 - 21: Enemy Levels, Map Design
 
-        Plan for Levels:
+Febuary 21st - 26th:
 
-                Beginning area is a tutorial.
-                Most likely will be 5 "levels" total. Each with enemies
-                5th level will be a boss fight.
-		1st is Tutorial
+	Enemy Design
 
-Febuary 21st - 27th - Boss Fight + UI Design
+Febuary 27th - March 2nd:
 
-Febuary 28th - March 4th: Playtesting and gaining feedback on project
+	Boss Design
 
-March 4st - Work on Final Touches of Project
+March 2nd - 4th: Testing + Final Touches:
 
-March 7th - Project Submissions
+March 4th - 7th: More Touches + Presentation Creation

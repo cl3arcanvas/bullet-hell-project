@@ -19,10 +19,13 @@ public class Spellbook : MonoBehaviour
     [SerializeField] private float timeBtwShot = 0.3f;
     private float currentTimeBtwShot;
     [SerializeField] private GameObject bullet;
+    [SerializeField] private AudioSource shoot;
     
 
     private void Start()
     {
+        mainCam = Camera.main;
+        playerSpr = GameObject.FindGameObjectWithTag("PlayerSprite").GetComponent<SpriteRenderer>();
         currentTimeBtwShot = 0;
     }
 
@@ -44,6 +47,7 @@ public class Spellbook : MonoBehaviour
             bookSpr.enabled = true;
             Instantiate(bullet, ShootPoint.position, spellbook.rotation);
             currentTimeBtwShot = timeBtwShot;
+            shoot.Play();
         }
         else
         {

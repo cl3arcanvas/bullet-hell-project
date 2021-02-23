@@ -33,22 +33,26 @@ public class Bullet : MonoBehaviour
             currentTimeToDestroy -= Time.deltaTime;
             transform.Translate(new Vector2(speed * Time.deltaTime, 0));
 
+
+        if (shouldDestroy)
+        {
+            Destroy(gameObject);
+        }
+
+
         if (hasCollided) 
         {
             shouldDestroy = true;
         }
 
 
-        if (shouldDestroy) 
-        {
-            Destroy(gameObject);
-        }
-
+        
         if (shouldspin) 
         {
             spriteHolder.transform.eulerAngles += new Vector3(0, 0, spinforce * Time.deltaTime);
 
         }
+
 
 
 
@@ -68,10 +72,18 @@ public class Bullet : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player") && !Passive) 
         {
-            Debug.Log("Hit Player");
+            collision.gameObject.GetComponent<IDamageable>().Damage(1);
+
         } else if(collision.gameObject.CompareTag("Player") && Passive)
         {
             shouldDestroy = false;
+
+        } 
+        
+        if (Passive) 
+        {
+            if (collision.gameObject.GetComponent<IDamageable>() != null)
+                collision.gameObject.GetComponent<IDamageable>().Damage(1);
         }
 
         
