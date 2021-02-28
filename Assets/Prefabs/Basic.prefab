@@ -86,6 +86,8 @@ MonoBehaviour:
   timeBtwShot: 0.3
   bullet: {fileID: 1457495252955611283, guid: 12d2adcdf5a07ce42bbe6d48d8818b61, type: 3}
   shoot: {fileID: 8765161777196083255}
+  maxMana: 7
+  mana: 0
 --- !u!1 &4191573927117099189
 GameObject:
   m_ObjectHideFlags: 0

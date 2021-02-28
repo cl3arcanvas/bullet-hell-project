@@ -8,6 +8,7 @@ TagManager:
   - Walk
   - CollisionLedge
   - PlayerSprite
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Void
   - Walk
   - PlayerSprite
-  - 
+  - Enemy
   - 
   - 
   - 

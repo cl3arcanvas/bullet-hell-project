@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
-public class Movement : MonoBehaviour, IDamageable
+public class Player : MonoBehaviour, IDamageable
 {
 
 
@@ -34,24 +35,88 @@ public class Movement : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask walk;
     [SerializeField] private LayerMask edge;
     [SerializeField] private int maxHealth;
-    [HideInInspector] public int health;
+    public int health;
     [SerializeField] public bool dead = false;
+    private bool falling;
+    [SerializeField] private float invinceTime;
+    private float currentInvincTime;
 
     // Visuals
     [SerializeField] private GameObject shadows;
 
     // Misc
     [SerializeField] private Spellbook book;
+    [SerializeField] private Image[] hearts;
+    [SerializeField] private Sprite fillHearts;
+    [SerializeField] private Sprite notFilledHearts;
+    [SerializeField] private Image[] manaContainer;
+    [SerializeField] private Sprite fillMana;
+    [SerializeField] private Sprite notFilledMana;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         currentTimeBtwDash = timeBtwDash;
+        health = maxHealth;
+        currentInvincTime = 0;
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
+
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
+
+        for (int i = 0; i < hearts.Length; i++)
+        {
+            if (i < health)
+            {
+                hearts[i].sprite = fillHearts;
+            }
+            else
+            {
+                hearts[i].sprite = notFilledHearts;
+            }
+
+            if (i < maxHealth)
+            {
+                hearts[i].enabled = true;
+            }
+            else
+            {
+                hearts[i].enabled = false;
+            }
+        }
+
+        for (int i = 0; i < manaContainer.Length; i++)
+        {
+            if (i < book.mana)
+            {
+                manaContainer[i].sprite = fillMana;
+            }
+            else
+            {
+
+                manaContainer[i].sprite = notFilledMana;
+            }
+
+            if (i < book.maxMana)
+            {
+                manaContainer[i].enabled = true;
+            }
+            else
+            {
+                manaContainer[i].enabled = false;
+            }
+        }
+
+
+
+
         if (movementOverAngle)
         {
             anim.SetInteger("DirectionX", (int)movementVector.x);
@@ -65,8 +130,6 @@ public class Movement : MonoBehaviour, IDamageable
             }
 
         } 
-
-
         
         if (Input.GetButtonDown("Fire1") && book.gameObject.activeSelf == true)
         {
@@ -75,7 +138,10 @@ public class Movement : MonoBehaviour, IDamageable
             Invoke("SetMovementOverAngle", 0.5f);
         }
 
-
+        if (currentInvincTime > 0) 
+        {
+            currentInvincTime -= Time.deltaTime;
+        }
 
         if (touchingCollisionEdge && !touchingWalk && !dashing) 
         {
@@ -89,16 +155,19 @@ public class Movement : MonoBehaviour, IDamageable
 
         isMoving = movementVector != Vector2.zero;
         
-
         anim.SetBool("Running", isMoving);
         
-
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
         if (dashing)
             book.enabled = false;
 
+        if (health <= 0)
+        {
+            falling = false;
 
+            Die();
+        }
 
         if (currentTimeBtwDash <= 0)
         {
@@ -113,9 +182,6 @@ public class Movement : MonoBehaviour, IDamageable
         {
             currentTimeBtwDash -= Time.deltaTime;
         }
-        
-
-        
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
        
@@ -144,15 +210,26 @@ public class Movement : MonoBehaviour, IDamageable
         */
     }
 
-    void Die() 
+    void Die()
     {
-       
+
         dead = true;
-        rb.gravityScale = 125;
+        stopMoving = true;
+        if (falling)
+        {
+            rb.gravityScale = 125;
+            Invoke("ReloadScene", 0.4f);
+            GetComponent<SortingGroup>().sortingOrder = -6;
+        }
+        else
+        {
+
+            Invoke("ReloadScene", 1f);
+        }
+
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         Camera.main.GetComponent<FollowPlayerScript>().enabled = false;
-        GetComponent<SortingGroup>().sortingOrder = -6;
-        Invoke("ReloadScene", 0.4f);
+
     }
 
     void ReloadScene() 
@@ -203,9 +280,15 @@ public class Movement : MonoBehaviour, IDamageable
 
     }
 
-    public void Damage(int amount) 
+    public void Damage(int amount)
     {
-        health -= amount;
+        if (currentInvincTime <= 0)
+        { 
+            health -= amount;
+            currentInvincTime = invinceTime;
+        }
+
+
     }
 
 }

@@ -20,10 +20,13 @@ public class Spellbook : MonoBehaviour
     private float currentTimeBtwShot;
     [SerializeField] private GameObject bullet;
     [SerializeField] private AudioSource shoot;
-    
+    [SerializeField] public int maxMana;
+    public int mana;
+    private bool reloading = false;
 
     private void Start()
     {
+        mana = maxMana;
         mainCam = Camera.main;
         playerSpr = GameObject.FindGameObjectWithTag("PlayerSprite").GetComponent<SpriteRenderer>();
         currentTimeBtwShot = 0;
@@ -42,16 +45,22 @@ public class Spellbook : MonoBehaviour
         #endregion
 
         #region Shooting
-        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0)
+        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0 && mana > 0)
         {
             bookSpr.enabled = true;
             Instantiate(bullet, ShootPoint.position, spellbook.rotation);
             currentTimeBtwShot = timeBtwShot;
             shoot.Play();
+            mana--;
         }
-        else
+        else if (currentTimeBtwShot > 0)
         {
             currentTimeBtwShot -= Time.deltaTime;
+        } else if (mana <= 0)
+        { 
+            if (!reloading)
+                Invoke("reload", 2f);
+            reloading = true;
         }
 
         if (currentTimeBtwShot <= 0)
@@ -103,6 +112,12 @@ public class Spellbook : MonoBehaviour
             bottom();
         }
         
+    }
+
+    private void reload() 
+    {
+        mana = maxMana;
+        reloading = false;
     }
 
 

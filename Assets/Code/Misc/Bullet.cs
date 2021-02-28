@@ -40,10 +40,6 @@ public class Bullet : MonoBehaviour
         }
 
 
-        if (hasCollided) 
-        {
-            shouldDestroy = true;
-        }
 
 
         
@@ -70,27 +66,40 @@ public class Bullet : MonoBehaviour
 
         shouldDestroy = true;
 
-        if (collision.gameObject.CompareTag("Player") && !Passive) 
+        if (collision.gameObject.CompareTag("Player") && !Passive && !collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<IDamageable>().Damage(1);
 
-        } else if(collision.gameObject.CompareTag("Player") && Passive)
+        }
+        else if (collision.gameObject.CompareTag("Player") && Passive)
         {
             shouldDestroy = false;
 
-        } 
         
-        if (Passive) 
+        }
+
+        if (collision.gameObject.CompareTag("Enemy") && !Passive) 
+        {
+            shouldDestroy = false;
+        }
+
+        if (Passive)
         {
             if (collision.gameObject.GetComponent<IDamageable>() != null)
                 collision.gameObject.GetComponent<IDamageable>().Damage(1);
+            shouldDestroy = true;
         }
 
-        
+    }
 
-
-
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Passive)
+        {
+            if (collision.gameObject.GetComponent<IDamageable>() != null)
+                collision.gameObject.GetComponent<IDamageable>().Damage(1);
+            shouldDestroy = true;
+        }
     }
 
 

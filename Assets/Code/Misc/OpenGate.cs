@@ -32,6 +32,7 @@ public class OpenGate : MonoBehaviour
         if (EnemiesDefeated.Count == transform.childCount && !GateGone)
         { 
             GateGone = true;
+            
             Invoke("turnOffGate", 1f);
         }
 
@@ -39,6 +40,7 @@ public class OpenGate : MonoBehaviour
         {
             foreach (GameObject gate in gates)
             {
+                gate.GetComponent<BoxCollider2D>().enabled = false;
                 gate.transform.position += new Vector3(0, 25 * Time.deltaTime);
 
             }
