@@ -20,6 +20,18 @@ public class OpenGate : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (transform.childCount <= 0 && !GateGone) 
+        {
+            foreach (GameObject gate in gates)
+            {
+                gate.GetComponent<BoxCollider2D>().enabled = false;
+                gate.transform.position += new Vector3(0, 25 * Time.deltaTime);
+
+            }
+        } 
+
+        /*
         for (int i = 0; i < transform.childCount; i++)
         {
             GameObject Go = transform.GetChild(i).gameObject;
@@ -46,6 +58,7 @@ public class OpenGate : MonoBehaviour
             }
             
         }
+        */
         
         
     }

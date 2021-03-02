@@ -24,7 +24,8 @@ public class Teleporter : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Invoke("LoadNextScene", 0.5f);
+        if (collision.gameObject.CompareTag("Player"))
+            Invoke("LoadNextScene", 0.5f);
     }
 
 }

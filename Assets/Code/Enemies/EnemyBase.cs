@@ -61,7 +61,14 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     private void Update()
     {
-
+        if (target.position.x > transform.position.x)
+        {
+            EnemyGFX.GetComponent<SpriteRenderer>().flipX = true;
+        }
+        else if (target.position.x < transform.position.x)
+        {
+            EnemyGFX.GetComponent<SpriteRenderer>().flipX = false;
+        }
 
         nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, player);
 

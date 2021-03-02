@@ -75,31 +75,51 @@ public class Bullet : MonoBehaviour
         {
             shouldDestroy = false;
 
-        
-        }
 
-        if (collision.gameObject.CompareTag("Enemy") && !Passive) 
-        {
-            shouldDestroy = false;
         }
-
-        if (Passive)
+        else if (Passive)
         {
             if (collision.gameObject.GetComponent<IDamageable>() != null)
                 collision.gameObject.GetComponent<IDamageable>().Damage(1);
             shouldDestroy = true;
+        }
+
+
+        if ((collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss")) && !Passive)
+        {
+            shouldDestroy = false;
         }
 
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Passive)
+        shouldDestroy = true;
+
+        if (collision.gameObject.CompareTag("Player") && !Passive && !collision.gameObject.CompareTag("Enemy"))
         {
-            if (collision.gameObject.GetComponent<IDamageable>() != null)
-                collision.gameObject.GetComponent<IDamageable>().Damage(1);
-            shouldDestroy = true;
+            collision.gameObject.GetComponent<IDamageable>().Damage(1);
+
         }
+        else if (collision.gameObject.CompareTag("Player") && Passive)
+        {
+            shouldDestroy = false;
+
+
+        } else if (Passive)
+        {
+                if (collision.gameObject.GetComponent<IDamageable>() != null)
+                    collision.gameObject.GetComponent<IDamageable>().Damage(1);
+                shouldDestroy = true;
+        }
+
+
+        if ((collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss")) && !Passive)
+        {
+            shouldDestroy = false;
+        }
+
+        
     }
 
 

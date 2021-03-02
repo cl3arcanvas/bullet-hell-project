@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3477126842019408609}
   - component: {fileID: 4537189422318967131}
   - component: {fileID: 4949840137679128450}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Enemy_Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,7 +66,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.008690536, y: -0.0012347847}
@@ -113,7 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 734908175782977785}
   - component: {fileID: 3555010844722685856}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: circlelight
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 4ee267d5d2b83974485e55e1eb00e7da, type: 3}
   m_Color: {r: 1, g: 0.056943767, b: 0, a: 0.22745098}
   m_FlipX: 0
@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4182476959973036637}
   - component: {fileID: 5121547032169546974}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -254,7 +254,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 0b67f4220bb24c3478d7d9ff6ffc9d9d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

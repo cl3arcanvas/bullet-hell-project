@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 7711417270308585070}
   - component: {fileID: 5470867438704214242}
   m_Layer: 16
-  m_Name: Slime
+  m_Name: BigSlime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133,8 +133,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8239460782903270892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 8239460781821231089}
   m_Father: {fileID: 0}
@@ -153,8 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idle: 0
-  speed: 200
-  maxHealth: 3
+  speed: 450
+  maxHealth: 7
   hit: {fileID: 8239460782943918148}
   player:
     serializedVersion: 2
@@ -166,7 +166,7 @@ MonoBehaviour:
   nearPlayer: 0
   shouldTrack: 0
   health: 3
-  damage: 1
+  damage: 2
   ControlledByScript: 0
 --- !u!61 &8356298796484521771
 BoxCollider2D:
@@ -261,7 +261,7 @@ MonoBehaviour:
   repathRate: 0.5
   canSearch: 1
   canMove: 1
-  maxSpeed: 2
+  maxSpeed: 4
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -274,7 +274,7 @@ MonoBehaviour:
   rotationSpeed: 360
   slowdownDistance: 0.6
   pickNextWaypointDist: 3
-  endReachedDistance: 0.2
+  endReachedDistance: 0
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
   whenCloseToDestination: 1

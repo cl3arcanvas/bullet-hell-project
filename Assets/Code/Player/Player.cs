@@ -15,7 +15,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private float speed = 5f;
     [SerializeField] private Animator anim;
     private bool isMoving = false;
-    private bool stopMoving = false;
+    public bool stopMoving = false;
 
     // Dashing
     private bool dashing = false;
@@ -40,6 +40,7 @@ public class Player : MonoBehaviour, IDamageable
     private bool falling;
     [SerializeField] private float invinceTime;
     private float currentInvincTime;
+    [SerializeField] private Image deathScreen;
 
     // Visuals
     [SerializeField] private GameObject shadows;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Image[] manaContainer;
     [SerializeField] private Sprite fillMana;
     [SerializeField] private Sprite notFilledMana;
+    [SerializeField] private AudioSource hitSound;
 
     // Start is called before the first frame update
     void Start()
@@ -147,6 +149,7 @@ public class Player : MonoBehaviour, IDamageable
         {
             stopMoving = true;
             shadows.SetActive(false);
+            falling = true;
             Invoke("Die", 0.5f);
         }
 
@@ -212,9 +215,11 @@ public class Player : MonoBehaviour, IDamageable
 
     void Die()
     {
-
+        deathScreen.gameObject.SetActive(true);
         dead = true;
         stopMoving = true;
+        GetComponent<SortingGroup>().sortingOrder = -4;
+        anim.enabled = false;
         if (falling)
         {
             rb.gravityScale = 125;
@@ -282,8 +287,10 @@ public class Player : MonoBehaviour, IDamageable
 
     public void Damage(int amount)
     {
+
         if (currentInvincTime <= 0)
-        { 
+        {
+            hitSound.Play();
             health -= amount;
             currentInvincTime = invinceTime;
         }

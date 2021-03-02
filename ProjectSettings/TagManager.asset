@@ -9,6 +9,7 @@ TagManager:
   - CollisionLedge
   - PlayerSprite
   - Enemy
+  - Boss
   layers:
   - Default
   - TransparentFX

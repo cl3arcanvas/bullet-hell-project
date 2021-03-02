@@ -45,7 +45,7 @@ public class Spellbook : MonoBehaviour
         #endregion
 
         #region Shooting
-        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0 && mana > 0)
+        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0 && mana > 0 )
         {
             bookSpr.enabled = true;
             Instantiate(bullet, ShootPoint.position, spellbook.rotation);
