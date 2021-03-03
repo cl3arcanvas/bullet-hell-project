@@ -370,7 +370,7 @@ MonoBehaviour:
   arrow: {fileID: 4850924062375001233, guid: 3764e0df8696c9c418be3e179f24de55, type: 3}
   shootPoint: {fileID: 3498752452105353625}
   spr: {fileID: 3498752452081054914}
-  timeBtwShot: 5
+  timeBtwShot: 3
 --- !u!114 &8523767837779008896
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using Pathfinding;
 public class EnemyBase : MonoBehaviour, IDamageable
 {
 
-    [SerializeField] private bool idle = false;
+    [SerializeField] public bool idle = false;
     [SerializeField] private float speed = 200;
     [SerializeField] public int maxHealth;
     [SerializeField] private AudioSource hit;
@@ -25,6 +25,8 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [HideInInspector] public int health;
     [SerializeField] private int damage;
     [SerializeField] private bool ControlledByScript = true;
+    [HideInInspector] public bool controlledByOther = false;
+    [HideInInspector] public bool invincible = false;
 
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
         GetComponent<AIDestinationSetter>().target = GameObject.FindGameObjectWithTag("Player").transform;
 
+        
         if (idle)
         {
             speed = 0;
@@ -72,7 +75,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
         nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, player);
 
-        if (nearPlayer == true || health != maxHealth) 
+        if ((nearPlayer == true || health != maxHealth)) 
         {
             shouldTrack = true;
                 
@@ -134,9 +137,12 @@ public class EnemyBase : MonoBehaviour, IDamageable
             }
 
 
-        } else if (!ControlledByScript && shouldTrack && !idle) 
+        } else 
         {
-            gameObject.GetComponent<AIPath>().canMove = true;
+            if (!ControlledByScript && shouldTrack && !idle)
+                gameObject.GetComponent<AIPath>().canMove = true;
+            else
+                gameObject.GetComponent<AIPath>().canMove = false;
         }
         
 
@@ -160,8 +166,11 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     public void Damage(int amount) 
     {
-        hit.Play();
-        health -= amount;
+        if (!invincible)
+        {
+            hit.Play();
+            health -= amount;
+        }
     }
 
     private void OnPathComplete(Path p) 

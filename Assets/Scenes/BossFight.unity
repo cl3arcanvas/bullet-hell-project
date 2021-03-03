@@ -1024,6 +1024,7 @@ MonoBehaviour:
   enemiesToSpawn:
   - {fileID: 8239460782903270892, guid: 0de5277a624b84a44b65776bb4f115f7, type: 3}
   - {fileID: 3498752452062841136, guid: d3ea7d7dfd725ad4fa9533b0bcbb4de5, type: 3}
+  - {fileID: 4384997694289020693, guid: d237b855af647f547aec283366da3e18, type: 3}
   spawnLocs:
   - {fileID: 857525089}
   - {fileID: 1073918369}
