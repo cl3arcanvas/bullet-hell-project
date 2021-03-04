@@ -2007,7 +2007,7 @@ BoxCollider2D:
   m_Offset: {x: -0.029444456, y: -1.1936016}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.4976169, y: 0.23973949}
     oldSize: {x: 4, y: 4}
     newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
@@ -15946,7 +15946,7 @@ GameObject:
   - component: {fileID: 1290095368}
   m_Layer: 12
   m_Name: CollisionLedge
-  m_TagString: Untagged
+  m_TagString: CollLedge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30461,7 +30461,7 @@ BoxCollider2D:
   m_Offset: {x: -0.029444456, y: -1.1936016}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.4976169, y: 0.23973949}
     oldSize: {x: 4, y: 4}
     newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
@@ -31068,7 +31068,7 @@ BoxCollider2D:
   m_Offset: {x: -0.022240162, y: -1.3640565}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.4976169, y: 0.23973949}
     oldSize: {x: 4, y: 4}
     newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5

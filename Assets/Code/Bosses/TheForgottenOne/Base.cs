@@ -31,6 +31,9 @@ public class Base : MonoBehaviour, IDamageable
     private bool circularShoot = false;
     [SerializeField] private GameObject cam;
     [SerializeField] private GameObject mainCam;
+    [SerializeField] private AudioSource hit_sound;
+    [SerializeField] private AudioSource death_sound;
+
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +55,7 @@ public class Base : MonoBehaviour, IDamageable
         if (health <=  0 && !dead) 
         {
             dead = true;
+            death_sound.Play();
             anim.SetTrigger("Dead");
             foreach (GameObject i in GameObject.FindGameObjectsWithTag("Enemy")) 
             {
@@ -224,10 +228,14 @@ public class Base : MonoBehaviour, IDamageable
     }
 
 
-    public void Damage(int amount) 
+    public void Damage(int amount)
     {
+        if (health > 1)
+        {
+            hit_sound.Play();
+            
+        }
         health -= amount;
     }
-
 
 }

@@ -90,6 +90,12 @@ public class Bullet : MonoBehaviour
             shouldDestroy = false;
         }
 
+        if (collision.gameObject.CompareTag("CollLedge")) 
+        {
+            shouldDestroy = false;
+
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -119,7 +125,12 @@ public class Bullet : MonoBehaviour
             shouldDestroy = false;
         }
 
-        
+        if (collision.gameObject.CompareTag("CollLedge"))
+        {
+            shouldDestroy = false;
+
+        }
+
     }
 
 

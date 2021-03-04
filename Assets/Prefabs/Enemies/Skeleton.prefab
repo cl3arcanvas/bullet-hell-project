@@ -385,7 +385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   idle: 1
   speed: 200
-  maxHealth: 5
+  maxHealth: 4
   hit: {fileID: 3498752452062841149}
   player:
     serializedVersion: 2
@@ -399,6 +399,8 @@ MonoBehaviour:
   health: 0
   damage: 0
   ControlledByScript: 0
+  controlledByOther: 0
+  invincible: 0
 --- !u!1 &3498752452081054913
 GameObject:
   m_ObjectHideFlags: 0

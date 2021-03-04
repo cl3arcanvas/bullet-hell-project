@@ -45,7 +45,7 @@ public class Spellbook : MonoBehaviour
         #endregion
 
         #region Shooting
-        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0 && mana > 0 )
+        if (Input.GetButtonDown("Fire1") && currentTimeBtwShot <= 0 && mana > 0 && !reloading)
         {
             bookSpr.enabled = true;
             Instantiate(bullet, ShootPoint.position, spellbook.rotation);
@@ -59,7 +59,13 @@ public class Spellbook : MonoBehaviour
         } else if (mana <= 0)
         { 
             if (!reloading)
-                Invoke("reload", 2f);
+                Invoke("reload", 1.2f);
+            reloading = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Invoke("reload", 1.2f);
             reloading = true;
         }
 
