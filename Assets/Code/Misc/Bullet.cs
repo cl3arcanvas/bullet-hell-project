@@ -65,7 +65,6 @@ public class Bullet : MonoBehaviour
     {
 
         shouldDestroy = true;
-
         if (collision.gameObject.CompareTag("Player") && !Passive && !collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<IDamageable>().Damage(1);
@@ -74,8 +73,6 @@ public class Bullet : MonoBehaviour
         else if (collision.gameObject.CompareTag("Player") && Passive)
         {
             shouldDestroy = false;
-
-
         }
         else if (Passive)
         {
@@ -83,8 +80,7 @@ public class Bullet : MonoBehaviour
                 collision.gameObject.GetComponent<IDamageable>().Damage(1);
             shouldDestroy = true;
         }
-
-
+        
         if ((collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss")) && !Passive)
         {
             shouldDestroy = false;
@@ -95,13 +91,18 @@ public class Bullet : MonoBehaviour
             shouldDestroy = false;
 
         }
+        if (collision.gameObject.CompareTag("Walk"))
+        {
+            shouldDestroy = false;
+
+        }
 
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         shouldDestroy = true;
-
         if (collision.gameObject.CompareTag("Player") && !Passive && !collision.gameObject.CompareTag("Enemy"))
         {
             collision.gameObject.GetComponent<IDamageable>().Damage(1);
@@ -110,15 +111,13 @@ public class Bullet : MonoBehaviour
         else if (collision.gameObject.CompareTag("Player") && Passive)
         {
             shouldDestroy = false;
-
-
-        } else if (Passive)
-        {
-                if (collision.gameObject.GetComponent<IDamageable>() != null)
-                    collision.gameObject.GetComponent<IDamageable>().Damage(1);
-                shouldDestroy = true;
         }
-
+        else if (Passive)
+        {
+            if (collision.gameObject.GetComponent<IDamageable>() != null)
+                collision.gameObject.GetComponent<IDamageable>().Damage(1);
+            shouldDestroy = true;
+        }
 
         if ((collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Boss")) && !Passive)
         {
@@ -131,8 +130,12 @@ public class Bullet : MonoBehaviour
 
         }
 
+        if (collision.gameObject.CompareTag("Walk"))
+        {
+            shouldDestroy = false;
+
+        }
     }
 
-
-
+    
 }

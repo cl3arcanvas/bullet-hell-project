@@ -133,7 +133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8239460782903270892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2, z: -10}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8239460781821231089}
@@ -168,6 +168,8 @@ MonoBehaviour:
   health: 3
   damage: 1
   ControlledByScript: 0
+  controlledByOther: 0
+  invincible: 0
 --- !u!61 &8356298796484521771
 BoxCollider2D:
   m_ObjectHideFlags: 0
