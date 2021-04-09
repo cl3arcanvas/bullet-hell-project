@@ -214,8 +214,7 @@ MonoBehaviour:
   speed: 6
   anim: {fileID: 5651336796509382816}
   stopMoving: 0
-  dashTime: 0.1
-  timeBtwDash: 0.3
+  dashForce: 3000
   CheckSize: {x: 0.76, y: 0.39}
   feetpos: {fileID: 5651336796475033383}
   walk:
