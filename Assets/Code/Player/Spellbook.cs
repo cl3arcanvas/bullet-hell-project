@@ -90,12 +90,6 @@ public class Spellbook : MonoBehaviour
             spellbook.localScale = new Vector3(spellbook.localScale.x, Mathf.Abs(spellbook.localScale.y), -1);
             spellbook.localPosition = new Vector3(Mathf.Abs(spellbook.localPosition.x), spellbook.localPosition.y);
         }
-
-
-        //Debug.Log(angle);
-
-       
-
         #endregion
 
     }
@@ -120,7 +114,7 @@ public class Spellbook : MonoBehaviour
         
     }
 
-    private void reload() 
+    private void Reload() 
     {
         mana = maxMana;
         reloading = false;

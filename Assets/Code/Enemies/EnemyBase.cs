@@ -6,26 +6,32 @@ using Pathfinding;
 public class EnemyBase : MonoBehaviour, IDamageable
 {
 
-    [SerializeField] public bool idle = false;
-    [SerializeField] private float speed = 200;
-    [SerializeField] public int maxHealth;
+    // FX
     [SerializeField] private AudioSource hit;
-    [SerializeField] public LayerMask player;
-    [SerializeField] private Transform target;
+    [SerializeField] private Transform EnemyGFX;
+
+    // health and damage
+    [SerializeField] public int maxHealth;
+    [HideInInspector] public int health;
+    [SerializeField] private int damage;
+
+    // movement and pathfinding
     [SerializeField] private float nextWayPointDistance = 3;
     private Path path;
     private int currentWaypoint = 0;
     private bool reachedEndOfPath = false;
     private Seeker seeker;
+    [SerializeField] public bool idle = false;
+    [SerializeField] private float speed = 200;
     private Rigidbody2D rb;
-    [SerializeField] private Transform EnemyGFX;
+
+    // misc
+    [SerializeField] public LayerMask player;
+    [SerializeField] private Transform target;
     [SerializeField] public float checkArea;
-    public bool nearPlayer;
-    public bool shouldTrack;
-    [HideInInspector] public int health;
-    [SerializeField] private int damage;
+    [HideInInspector] public bool nearPlayer;
+    [HideInInspector] public bool shouldTrack;
     [SerializeField] private bool ControlledByScript = true;
-    [HideInInspector] public bool controlledByOther = false;
     [HideInInspector] public bool invincible = false;
 
     // Start is called before the first frame update
@@ -35,7 +41,6 @@ public class EnemyBase : MonoBehaviour, IDamageable
         gameObject.GetComponent<AIPath>().canMove = false;
 
         GetComponent<AIDestinationSetter>().target = GameObject.FindGameObjectWithTag("Player").transform;
-
         
         if (idle)
         {
@@ -47,7 +52,6 @@ public class EnemyBase : MonoBehaviour, IDamageable
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         
-
         health = maxHealth; 
 
         InvokeRepeating("UpdatePath", 0f, .5f);
@@ -56,8 +60,6 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     private void UpdatePath() 
     {
-
-
         if (seeker.IsDone())
             seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
