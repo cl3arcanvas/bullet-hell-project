@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour, IDamageable
 {
 
-
     // movement
     private Rigidbody2D rb;
     private Vector2 movementVector;
@@ -18,14 +17,7 @@ public class Player : MonoBehaviour, IDamageable
     public bool stopMoving = false;
 
     // Dashing
-    private bool dashing = false;
-    //[SerializeField] private float dashForce = 10;
-    private Vector2 mouseLoc = new Vector2();
-    //[SerializeField] private float dashMultiplier = 2;
-    [SerializeField] private float dashTime = 0.1f;
-    [SerializeField] private float timeBtwDash = 0.5f;
     private bool movementOverAngle = true;
-    private float currentTimeBtwDash;
 
     // Death/Health 
     [SerializeField] private Vector2 CheckSize;
@@ -59,15 +51,43 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        currentTimeBtwDash = timeBtwDash;
         health = maxHealth;
         currentInvincTime = 0;
-        //DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
 
+        touchingCollisionEdge = Physics2D.OverlapBox(feetpos.position, CheckSize, 0, edge);
+        touchingWalk = Physics2D.OverlapBox(feetpos.position, CheckSize, 0, walk);
+        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        isMoving = movementVector != Vector2.zero;
+        anim.SetBool("Running", isMoving);
+
+        #region Controlling
+        if (movementOverAngle)
+        {
+            anim.SetInteger("DirectionX", (int)movementVector.x);
+            anim.SetInteger("DirectionY", (int)movementVector.y);
+            if (movementVector.x < 0) 
+            {
+                book.playerSpr.flipX = true;
+            } else if (movementVector.x > 0) 
+            {
+                book.playerSpr.flipX = false;
+            }
+
+        } 
+        
+        if (Input.GetButtonDown("Fire1") && book.gameObject.activeSelf == true)
+        {
+            movementOverAngle = false;
+            book.AngleCheck(right, left, top, bottom);
+            Invoke("SetMovementOverAngle", 0.5f);
+        }
+        #endregion
+
+        #region Death and Health
         if (health > maxHealth)
         {
             health = maxHealth;
@@ -102,7 +122,6 @@ public class Player : MonoBehaviour, IDamageable
             }
             else
             {
-
                 manaContainer[i].sprite = notFilledMana;
             }
 
@@ -116,36 +135,12 @@ public class Player : MonoBehaviour, IDamageable
             }
         }
 
-
-
-
-        if (movementOverAngle)
-        {
-            anim.SetInteger("DirectionX", (int)movementVector.x);
-            anim.SetInteger("DirectionY", (int)movementVector.y);
-            if (movementVector.x < 0) 
-            {
-                book.playerSpr.flipX = true;
-            } else if (movementVector.x > 0) 
-            {
-                book.playerSpr.flipX = false;
-            }
-
-        } 
-        
-        if (Input.GetButtonDown("Fire1") && book.gameObject.activeSelf == true)
-        {
-            movementOverAngle = false;
-            book.AngleCheck(right, left, top, bottom);
-            Invoke("SetMovementOverAngle", 0.5f);
-        }
-
         if (currentInvincTime > 0) 
         {
             currentInvincTime -= Time.deltaTime;
         }
 
-        if (touchingCollisionEdge && !touchingWalk && !dashing) 
+        if (touchingCollisionEdge && !touchingWalk) 
         {
             stopMoving = true;
             shadows.SetActive(false);
@@ -153,39 +148,14 @@ public class Player : MonoBehaviour, IDamageable
             Invoke("Die", 0.5f);
         }
 
-        touchingCollisionEdge = Physics2D.OverlapBox(feetpos.position, CheckSize, 0, edge);
-        touchingWalk = Physics2D.OverlapBox(feetpos.position, CheckSize, 0, walk);
-
-        isMoving = movementVector != Vector2.zero;
-        
-        anim.SetBool("Running", isMoving);
-        
-        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-
-        if (dashing)
-            book.enabled = false;
-
         if (health <= 0)
         {
             falling = false;
 
             Die();
         }
-
-        if (currentTimeBtwDash <= 0)
-        {
-            if (!dashing && Input.GetKeyDown(KeyCode.Space))
-            {
-                //dashing = true;
-                Invoke("EndDash", dashTime);
-                mouseLoc = (Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2)).normalized;
-                currentTimeBtwDash = timeBtwDash;
-            }
-        } else 
-        {
-            currentTimeBtwDash -= Time.deltaTime;
-        }
-
+#endregion
+        
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
        
     }
@@ -193,24 +163,13 @@ public class Player : MonoBehaviour, IDamageable
     void FixedUpdate()
     {
         // TODO: Dashing, 
-        if (!dashing && !stopMoving)
+        if (!stopMoving)
         {
             shadows.SetActive(true);
             anim.enabled = true;
             rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
             book.enabled = true;
         }
-        /*
-        if (dashing)
-        {
-            //shadows.SetActive(false);
-            anim.SetBool("Running", false);
-            anim.enabled = false;
-            float step = (dashMultiplier * Time.deltaTime);
-            gameObject.layer = 13;
-            transform.position = Vector3.MoveTowards(transform.position, mouseLoc * dashForce, step);
-        }
-        */
     }
 
     void Die()
@@ -228,7 +187,6 @@ public class Player : MonoBehaviour, IDamageable
         }
         else
         {
-
             Invoke("ReloadScene", 1f);
         }
 
@@ -237,6 +195,7 @@ public class Player : MonoBehaviour, IDamageable
 
     }
 
+    #region Utils
     void ReloadScene() 
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -246,13 +205,29 @@ public class Player : MonoBehaviour, IDamageable
     {
         movementOverAngle = true;
     }
-
-    void EndDash() 
+    #endregion
+   
+    #region Extras
+    private void OnDrawGizmosSelected()
     {
-        dashing = false;
-        gameObject.layer = 9;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(feetpos.position, CheckSize);
+
+    }
+    #endregion
+
+    public void Damage(int amount)
+    {
+
+        if (currentInvincTime <= 0)
+        {
+            hitSound.Play();
+            health -= amount;
+            currentInvincTime = invinceTime;
+        }
     }
 
+     #region Directions
     void top() 
     {
         book.bookSpr.sortingOrder = 0;
@@ -277,25 +252,6 @@ public class Player : MonoBehaviour, IDamageable
         anim.SetInteger("DirectionY", 0);
         book.playerSpr.flipX = true;
     }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(feetpos.position, CheckSize);
-
-    }
-
-    public void Damage(int amount)
-    {
-
-        if (currentInvincTime <= 0)
-        {
-            hitSound.Play();
-            health -= amount;
-            currentInvincTime = invinceTime;
-        }
-
-
-    }
+    #endregion
 
 }

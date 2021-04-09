@@ -1,4 +1,4 @@
-4/4 - 4/12: Fix Enemy AI Issues and Work on Level 5
+4/4 - 4/12: Clean up Code and Work on Level 5
 4/13 - 4/19: Create Enemies and Add levels
 4/20 - 4/25: Work On Player Controls (Dashing, extra weapons, etc)
 4/26 - 4/30: Get Feedback and work On Finishing Touches
