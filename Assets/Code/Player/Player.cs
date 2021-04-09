@@ -16,7 +16,16 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private Animator anim;
     private bool isMoving = false;
     public bool stopMoving = false;
+
+    // Dashing
+    private bool dashing = false;
+    //[SerializeField] private float dashForce = 10;
+    private Vector2 mouseLoc = new Vector2();
+    //[SerializeField] private float dashMultiplier = 2;
+    [SerializeField] private float dashTime = 0.1f;
+    [SerializeField] private float timeBtwDash = 0.5f;
     private bool movementOverAngle = true;
+    private float currentTimeBtwDash;
 
     // Death/Health 
     [SerializeField] private Vector2 CheckSize;
@@ -50,6 +59,7 @@ public class Player : MonoBehaviour, IDamageable
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        currentTimeBtwDash = timeBtwDash;
         health = maxHealth;
         currentInvincTime = 0;
         //DontDestroyOnLoad(gameObject);
@@ -106,6 +116,9 @@ public class Player : MonoBehaviour, IDamageable
             }
         }
 
+
+
+
         if (movementOverAngle)
         {
             anim.SetInteger("DirectionX", (int)movementVector.x);
@@ -132,7 +145,7 @@ public class Player : MonoBehaviour, IDamageable
             currentInvincTime -= Time.deltaTime;
         }
 
-        if (touchingCollisionEdge && !touchingWalk) 
+        if (touchingCollisionEdge && !touchingWalk && !dashing) 
         {
             stopMoving = true;
             shadows.SetActive(false);
@@ -149,11 +162,28 @@ public class Player : MonoBehaviour, IDamageable
         
         movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 
+        if (dashing)
+            book.enabled = false;
+
         if (health <= 0)
         {
             falling = false;
 
             Die();
+        }
+
+        if (currentTimeBtwDash <= 0)
+        {
+            if (!dashing && Input.GetKeyDown(KeyCode.Space))
+            {
+                //dashing = true;
+                Invoke("EndDash", dashTime);
+                mouseLoc = (Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2)).normalized;
+                currentTimeBtwDash = timeBtwDash;
+            }
+        } else 
+        {
+            currentTimeBtwDash -= Time.deltaTime;
         }
 
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
@@ -162,11 +192,25 @@ public class Player : MonoBehaviour, IDamageable
 
     void FixedUpdate()
     {
-
-        rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
-
         // TODO: Dashing, 
-  
+        if (!dashing && !stopMoving)
+        {
+            shadows.SetActive(true);
+            anim.enabled = true;
+            rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
+            book.enabled = true;
+        }
+        /*
+        if (dashing)
+        {
+            //shadows.SetActive(false);
+            anim.SetBool("Running", false);
+            anim.enabled = false;
+            float step = (dashMultiplier * Time.deltaTime);
+            gameObject.layer = 13;
+            transform.position = Vector3.MoveTowards(transform.position, mouseLoc * dashForce, step);
+        }
+        */
     }
 
     void Die()
@@ -201,6 +245,12 @@ public class Player : MonoBehaviour, IDamageable
     void SetMovementOverAngle() 
     {
         movementOverAngle = true;
+    }
+
+    void EndDash() 
+    {
+        dashing = false;
+        gameObject.layer = 9;
     }
 
     void top() 
