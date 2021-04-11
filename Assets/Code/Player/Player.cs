@@ -27,8 +27,8 @@ public class Player : MonoBehaviour, IDamageable
     [SerializeField] private LayerMask walk;
     [SerializeField] private LayerMask edge;
     [SerializeField] private int maxHealth;
-    public int health;
-    [SerializeField] public bool dead = false;
+    [HideInInspector] public int health;
+    [HideInInspector] public bool dead = false;
     private bool falling;
     [SerializeField] private float invinceTime;
     private float currentInvincTime;

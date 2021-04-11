@@ -59,13 +59,13 @@ public class Spellbook : MonoBehaviour
         } else if (mana <= 0)
         { 
             if (!reloading)
-                Invoke("reload", 1.2f);
+                Invoke("Reload", 1.2f);
             reloading = true;
         }
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Invoke("reload", 1.2f);
+            Invoke("Reload", 1.2f);
             reloading = true;
         }
 

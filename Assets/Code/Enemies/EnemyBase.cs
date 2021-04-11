@@ -16,22 +16,15 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] private int damage;
 
     // movement and pathfinding
-    [SerializeField] private float nextWayPointDistance = 3;
-    private Path path;
-    private int currentWaypoint = 0;
-    private bool reachedEndOfPath = false;
-    private Seeker seeker;
     [SerializeField] public bool idle = false;
-    [SerializeField] private float speed = 200;
     private Rigidbody2D rb;
 
     // misc
     [SerializeField] public LayerMask player;
-    [SerializeField] private Transform target;
+    private Transform target;
     [SerializeField] public float checkArea;
     [HideInInspector] public bool nearPlayer;
     [HideInInspector] public bool shouldTrack;
-    [SerializeField] private bool ControlledByScript = true;
     [HideInInspector] public bool invincible = false;
 
     // Start is called before the first frame update
@@ -42,30 +35,32 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
         GetComponent<AIDestinationSetter>().target = GameObject.FindGameObjectWithTag("Player").transform;
         
-        if (idle)
-        {
-            speed = 0;
-        }
-
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
         
         health = maxHealth; 
-
-        InvokeRepeating("UpdatePath", 0f, .5f);
         
-    }
-
-    private void UpdatePath() 
-    {
-        if (seeker.IsDone())
-            seeker.StartPath(rb.position, target.position, OnPathComplete);
     }
 
     private void Update()
     {
+        
+        #region Logic
+        nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, player);
+
+        if ((nearPlayer == true || health != maxHealth)) 
+        {
+            shouldTrack = true;
+        }
+
+        if (health <= 0)
+        {
+            Destroy(gameObject);
+        }
+        #endregion
+
+        #region Visuals
         if (target.position.x > transform.position.x)
         {
             EnemyGFX.GetComponent<SpriteRenderer>().flipX = true;
@@ -74,80 +69,18 @@ public class EnemyBase : MonoBehaviour, IDamageable
         {
             EnemyGFX.GetComponent<SpriteRenderer>().flipX = false;
         }
+        #endregion
 
-        nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, player);
-
-        if ((nearPlayer == true || health != maxHealth)) 
-        {
-            shouldTrack = true;
-                
-        }
-
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
+       
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-        if (ControlledByScript)
-        {
-            if (path == null)
-            {
-                return;
-            }
-
-            if (currentWaypoint >= path.vectorPath.Count)
-            {
-                reachedEndOfPath = true;
-                return;
-
-            }
-            else
-            {
-                reachedEndOfPath = false;
-            }
-
-            if (reachedEndOfPath)
-            {
-
-            }
-
-            Vector2 direction = ((Vector2)path.vectorPath[currentWaypoint] - rb.position).normalized;
-            Vector2 force = direction * speed * Time.deltaTime;
-
-            if (shouldTrack)
-                rb.AddForce(force);
-
-            float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
-
-            if (distance < nextWayPointDistance)
-            {
-                currentWaypoint++;
-            
-            }
-
-            if (force.x >= 0.01f)
-            {
-                EnemyGFX.GetComponent<SpriteRenderer>().flipX = false;
-            }
-            else if (force.x <= -0.01f)
-            {
-                EnemyGFX.GetComponent<SpriteRenderer>().flipX = true;
-            }
-
-
-        } else 
-        {
-            if (!ControlledByScript && shouldTrack && !idle)
-                gameObject.GetComponent<AIPath>().canMove = true;
-            else
-                gameObject.GetComponent<AIPath>().canMove = false;
-        }
-        
-
+    {   
+        if (shouldTrack && !idle)
+            gameObject.GetComponent<AIPath>().canMove = true;
+        else
+            gameObject.GetComponent<AIPath>().canMove = false;      
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -172,15 +105,6 @@ public class EnemyBase : MonoBehaviour, IDamageable
         {
             hit.Play();
             health -= amount;
-        }
-    }
-
-    private void OnPathComplete(Path p) 
-    {
-        if (!p.error) 
-        {
-            path = p;
-            currentWaypoint = 0;
         }
     }
 
