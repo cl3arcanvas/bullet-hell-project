@@ -152,23 +152,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c526526aa5f6c94b81762b49d9afeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle: 0
-  speed: 200
-  maxHealth: 3
   hit: {fileID: 8239460782943918148}
+  EnemyGFX: {fileID: 8239460781821231089}
+  maxHealth: 3
+  health: 3
+  damage: 1
+  idle: 0
   player:
     serializedVersion: 2
     m_Bits: 512
-  target: {fileID: 0}
-  nextWayPointDistance: 3
-  EnemyGFX: {fileID: 8239460781821231089}
   checkArea: 6.55
   nearPlayer: 0
   shouldTrack: 0
-  health: 3
-  damage: 1
-  ControlledByScript: 0
-  controlledByOther: 0
   invincible: 0
 --- !u!61 &8356298796484521771
 BoxCollider2D:
@@ -275,7 +270,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 3
+  pickNextWaypointDist: 2
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1

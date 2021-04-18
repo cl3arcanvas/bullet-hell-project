@@ -223,7 +223,7 @@ MonoBehaviour:
   maxAcceleration: -2.5
   rotationSpeed: 360
   slowdownDistance: 0.6
-  pickNextWaypointDist: 3
+  pickNextWaypointDist: 2
   endReachedDistance: 0.2
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 1
@@ -241,23 +241,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c526526aa5f6c94b81762b49d9afeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle: 0
-  speed: 200
-  maxHealth: 4
   hit: {fileID: 0}
+  EnemyGFX: {fileID: 3570900082171582631}
+  maxHealth: 4
+  health: 0
+  damage: 2
+  idle: 0
   player:
     serializedVersion: 2
     m_Bits: 512
-  target: {fileID: 0}
-  nextWayPointDistance: 0
-  EnemyGFX: {fileID: 3570900082171582631}
   checkArea: 7.93
   nearPlayer: 0
   shouldTrack: 0
-  health: 0
-  damage: 2
-  ControlledByScript: 0
-  controlledByOther: 0
   invincible: 0
 --- !u!114 &3570900083133244552
 MonoBehaviour:

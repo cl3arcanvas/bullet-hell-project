@@ -177,23 +177,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c526526aa5f6c94b81762b49d9afeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle: 0
-  speed: 200
-  maxHealth: 7
   hit: {fileID: 4384997694289020717}
+  EnemyGFX: {fileID: 4384997695940529617}
+  maxHealth: 7
+  health: 0
+  damage: 2
+  idle: 0
   player:
     serializedVersion: 2
     m_Bits: 512
-  target: {fileID: 0}
-  nextWayPointDistance: 3
-  EnemyGFX: {fileID: 4384997695940529617}
   checkArea: 5.19
   nearPlayer: 0
   shouldTrack: 0
-  health: 0
-  damage: 2
-  ControlledByScript: 0
-  controlledByOther: 0
   invincible: 0
 --- !u!82 &4384997694289020717
 AudioSource:
@@ -304,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotator: {fileID: 4384997695682309155}
-  rotateForce: 300
+  rotateForce: 400
   timeBtwShot: 5
   bullet: {fileID: 1457495252955611283, guid: 10931822c3028c7468ed19858be6d0b2, type: 3}
   timeBtwNextBullet: 0.04
