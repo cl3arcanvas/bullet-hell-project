@@ -48,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -158,9 +159,9 @@ MonoBehaviour:
   health: 3
   damage: 1
   idle: 0
-  player:
+  trigger:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 768
   checkArea: 6.55
   nearPlayer: 0
   shouldTrack: 0

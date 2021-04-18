@@ -48,6 +48,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -152,22 +153,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c526526aa5f6c94b81762b49d9afeeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idle: 0
-  speed: 450
-  maxHealth: 7
   hit: {fileID: 8239460782943918148}
-  player:
-    serializedVersion: 2
-    m_Bits: 512
-  target: {fileID: 0}
-  nextWayPointDistance: 3
   EnemyGFX: {fileID: 8239460781821231089}
+  maxHealth: 7
+  health: 3
+  damage: 2
+  idle: 0
+  trigger:
+    serializedVersion: 2
+    m_Bits: 768
   checkArea: 6.55
   nearPlayer: 0
   shouldTrack: 0
-  health: 3
-  damage: 2
-  ControlledByScript: 0
+  invincible: 0
 --- !u!61 &8356298796484521771
 BoxCollider2D:
   m_ObjectHideFlags: 0

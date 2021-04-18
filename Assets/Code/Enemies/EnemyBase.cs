@@ -8,7 +8,8 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
     // FX
     [SerializeField] private AudioSource hit;
-    [SerializeField] private Transform EnemyGFX;
+    [SerializeField] public Transform EnemyGFX;
+    [SerializeField] public bool handlesRotation = false;
 
     // health and damage
     [SerializeField] public int maxHealth;
@@ -20,7 +21,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     private Rigidbody2D rb;
 
     // misc
-    [SerializeField] public LayerMask player;
+    [SerializeField] public LayerMask trigger;
     private Transform target;
     [SerializeField] public float checkArea;
     [HideInInspector] public bool nearPlayer;
@@ -47,7 +48,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     {
         
         #region Logic
-        nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, player);
+        nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, trigger);
 
         if ((nearPlayer == true || health != maxHealth)) 
         {
@@ -61,11 +62,11 @@ public class EnemyBase : MonoBehaviour, IDamageable
         #endregion
 
         #region Visuals
-        if (target.position.x > transform.position.x)
+        if (target.position.x > transform.position.x && !handlesRotation)
         {
             EnemyGFX.GetComponent<SpriteRenderer>().flipX = true;
         }
-        else if (target.position.x < transform.position.x)
+        else if (target.position.x < transform.position.x && !handlesRotation)
         {
             EnemyGFX.GetComponent<SpriteRenderer>().flipX = false;
         }
