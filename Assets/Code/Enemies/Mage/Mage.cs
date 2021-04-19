@@ -14,6 +14,7 @@ public class Mage : MonoBehaviour
     [SerializeField] private float timeBtwNextBullet;
     private float currentTimeBtwNextBullet;
     private bool shooting;
+    [SerializeField] private GameObject Shield;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class Mage : MonoBehaviour
     {
 
         
+        
 
         if (currentTimeBtwShot <= 0 && !shooting && gameObject.GetComponent<EnemyBase>().shouldTrack)
         {
@@ -34,6 +36,7 @@ public class Mage : MonoBehaviour
             gameObject.GetComponent<EnemyBase>().idle = true;
             gameObject.GetComponent<EnemyBase>().invincible = true;
             currentTimeBtwShot = timeBtwShot;
+            Shield.SetActive(true);
 
         }
         else 
@@ -65,6 +68,7 @@ public class Mage : MonoBehaviour
         gameObject.GetComponent<EnemyBase>().invincible = false;
         gameObject.GetComponent<EnemyBase>().idle = false;
         shooting = false;
+         Shield.SetActive(false);
 
     }
 }

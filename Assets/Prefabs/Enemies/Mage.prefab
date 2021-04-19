@@ -387,6 +387,7 @@ MonoBehaviour:
   timeBtwShot: 5
   bullet: {fileID: 1457495252955611283, guid: 10931822c3028c7468ed19858be6d0b2, type: 3}
   timeBtwNextBullet: 0.04
+  Shield: {fileID: 3034507571876301245}
 --- !u!1 &4384997694978511136
 GameObject:
   m_ObjectHideFlags: 0
