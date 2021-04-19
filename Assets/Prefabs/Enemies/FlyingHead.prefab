@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 8048347053094512814}
   - component: {fileID: 8048347053094512809}
   - component: {fileID: 8048347053094512817}
-  m_Layer: 16
+  m_Layer: 17
   m_Name: FlyingHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ MonoBehaviour:
   hit: {fileID: 8048347054074950365}
   EnemyGFX: {fileID: 0}
   handlesRotation: 1
-  maxHealth: 1
+  maxHealth: 4
   health: 0
   damage: 5
   idle: 1
