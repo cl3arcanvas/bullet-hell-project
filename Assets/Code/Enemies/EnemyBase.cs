@@ -47,6 +47,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     private void Update()
     {
         
+
         #region Logic
         nearPlayer = Physics2D.OverlapCircle(transform.position, checkArea, trigger);
 

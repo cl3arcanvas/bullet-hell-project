@@ -17,6 +17,12 @@ public class Player : MonoBehaviour, IDamageable
     public bool stopMoving = false;
 
     // Dashing
+
+    private bool dashing = false;
+    [SerializeField] private float dashForce = 5f;
+    [SerializeField] private float dashLength = 0.5f;
+    [SerializeField] private Vector2 direction;
+
     private bool movementOverAngle = true;
 
     // Death/Health 
@@ -50,6 +56,7 @@ public class Player : MonoBehaviour, IDamageable
     // Start is called before the first frame update
     void Start()
     {
+        direction = new Vector2(0, -1);
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
         currentInvincTime = 0;
@@ -58,12 +65,19 @@ public class Player : MonoBehaviour, IDamageable
     private void Update()
     {
 
+        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        if (movementVector != Vector2.zero && !dashing) 
+        {
+            direction = movementVector.normalized;
+        }
         touchingCollisionEdge = Physics2D.OverlapBox(feetpos.position, CheckSize, 0, edge);
         touchingWalk = Physics2D.OverlapBox(feetpos.position, CheckSize, 0, walk);
-        movementVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        
         isMoving = movementVector != Vector2.zero;
         anim.SetBool("Running", isMoving);
 
+        
+            
         #region Controlling
         if (movementOverAngle)
         {
@@ -78,16 +92,41 @@ public class Player : MonoBehaviour, IDamageable
             }
 
         } 
+
+        if (Input.GetKeyDown(KeyCode.Space)) 
+        {
+            dashing = true;
+            Invoke("EndDash", dashLength);
+        }
+
+        if (dashing) 
+        {
+            rb.velocity = direction * dashForce;
+        }
+                   
         
+        if (!dead && !dashing && !stopMoving) 
+        {
+            shadows.SetActive(true);
+            anim.enabled = true;
+            rb.velocity = movementVector * speed;
+            //rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
+            book.enabled = true;
+
+        }
+        
+
         if (Input.GetButtonDown("Fire1") && book.gameObject.activeSelf == true)
         {
             movementOverAngle = false;
             book.AngleCheck(right, left, top, bottom);
-            Invoke("SetMovementOverAngle", 0.5f);
+            Invoke("SetMovementOverAngle", 0.8f);
         }
         #endregion
 
         #region Death and Health
+        
+        
         if (health > maxHealth)
         {
             health = maxHealth;
@@ -154,28 +193,24 @@ public class Player : MonoBehaviour, IDamageable
 
             Die();
         }
-#endregion
         
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
+        #endregion
+        
+        //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
        
     }
 
     void FixedUpdate()
     {
-        // TODO: Dashing, 
-        if (!stopMoving)
-        {
-            shadows.SetActive(true);
-            anim.enabled = true;
-            rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
-            book.enabled = true;
-        }
+
+         
     }
 
     void Die()
     {
         deathScreen.gameObject.SetActive(true);
         dead = true;
+        rb.velocity = Vector2.zero;
         stopMoving = true;
         GetComponent<SortingGroup>().sortingOrder = -4;
         anim.enabled = false;
@@ -225,6 +260,12 @@ public class Player : MonoBehaviour, IDamageable
             health -= amount;
             currentInvincTime = invinceTime;
         }
+    }
+
+    private void EndDash() 
+    {
+        dashing = false;
+
     }
 
      #region Directions
