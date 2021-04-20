@@ -75,9 +75,7 @@ public class Player : MonoBehaviour, IDamageable
         
         isMoving = movementVector != Vector2.zero;
         anim.SetBool("Running", isMoving);
-
-        
-            
+           
         #region Controlling
         if (movementOverAngle)
         {
@@ -93,7 +91,7 @@ public class Player : MonoBehaviour, IDamageable
 
         } 
 
-        if (Input.GetKeyDown(KeyCode.Space)) 
+        if (Input.GetKeyDown(KeyCode.Space) && !stopMoving) 
         {
             dashing = true;
             Invoke("EndDash", dashLength);
@@ -102,9 +100,9 @@ public class Player : MonoBehaviour, IDamageable
         if (dashing) 
         {
             rb.velocity = direction * dashForce;
+            gameObject.layer = 13;
         }
                    
-        
         if (!dead && !dashing && !stopMoving) 
         {
             shadows.SetActive(true);
@@ -112,9 +110,23 @@ public class Player : MonoBehaviour, IDamageable
             rb.velocity = movementVector * speed;
             //rb.MovePosition(rb.position + ((movementVector * speed) * Time.deltaTime));
             book.enabled = true;
-
+        } else 
+        {
+            book.enabled = false;
+            anim.enabled = false;
+            
+            if (stopMoving) 
+            {
+                rb.velocity = Vector2.zero;
+                EndDash();
+            }
         }
         
+        if (!touchingCollisionEdge && !touchingWalk) 
+        {
+            shadows.SetActive(false);
+        } 
+
 
         if (Input.GetButtonDown("Fire1") && book.gameObject.activeSelf == true)
         {
@@ -122,6 +134,7 @@ public class Player : MonoBehaviour, IDamageable
             book.AngleCheck(right, left, top, bottom);
             Invoke("SetMovementOverAngle", 0.8f);
         }
+
         #endregion
 
         #region Death and Health
@@ -179,13 +192,13 @@ public class Player : MonoBehaviour, IDamageable
             currentInvincTime -= Time.deltaTime;
         }
 
-        if (touchingCollisionEdge && !touchingWalk) 
+        if (((touchingCollisionEdge && !touchingWalk) || (!touchingCollisionEdge && !touchingWalk)) && !dashing) 
         {
             stopMoving = true;
             shadows.SetActive(false);
             falling = true;
             Invoke("Die", 0.5f);
-        }
+        } 
 
         if (health <= 0)
         {
@@ -198,12 +211,6 @@ public class Player : MonoBehaviour, IDamageable
         
         //transform.position = new Vector3(transform.position.x, transform.position.y, 0);
        
-    }
-
-    void FixedUpdate()
-    {
-
-         
     }
 
     void Die()
@@ -264,6 +271,7 @@ public class Player : MonoBehaviour, IDamageable
 
     private void EndDash() 
     {
+        gameObject.layer = 9;
         dashing = false;
 
     }

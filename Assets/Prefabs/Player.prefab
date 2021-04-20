@@ -216,7 +216,7 @@ MonoBehaviour:
   anim: {fileID: 5651336796509382816}
   stopMoving: 0
   dashForce: 40
-  dashLength: 0.7
+  dashLength: 0.15
   direction: {x: 0, y: 0}
   CheckSize: {x: 0.76, y: 0.39}
   feetpos: {fileID: 5651336796475033383}

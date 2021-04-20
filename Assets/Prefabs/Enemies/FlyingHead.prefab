@@ -173,7 +173,7 @@ MonoBehaviour:
   hit: {fileID: 8048347054074950365}
   EnemyGFX: {fileID: 0}
   handlesRotation: 1
-  maxHealth: 4
+  maxHealth: 2
   health: 0
   damage: 5
   idle: 1
