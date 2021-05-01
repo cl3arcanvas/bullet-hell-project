@@ -9,6 +9,7 @@ public class OpenGate : MonoBehaviour
     [SerializeField] private GameObject[] gates;
     ArrayList EnemiesDefeated = new ArrayList();
     [SerializeField] private AstarPath pathfinder;
+    private bool hasScanned = false;
     private bool GateGone; // for performance
 
     // Start is called before the first frame update
@@ -27,7 +28,11 @@ public class OpenGate : MonoBehaviour
             {
                 gate.GetComponent<BoxCollider2D>().enabled = false;
                 gate.transform.position += new Vector3(0, 25 * Time.deltaTime);
-
+                
+                if (!hasScanned) {
+                    pathfinder.Scan();
+                    hasScanned = true;
+                }
             }
         } 
 
