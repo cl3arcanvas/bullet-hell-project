@@ -15,6 +15,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
     [SerializeField] public int maxHealth;
     [HideInInspector] public int health;
     [SerializeField] private int damage;
+    [SerializeField] private GameObject deathEffect;
 
     // movement and pathfinding
     [SerializeField] public bool idle = false;
@@ -58,11 +59,13 @@ public class EnemyBase : MonoBehaviour, IDamageable
 
         if (health <= 0)
         {
+            Instantiate(deathEffect, gameObject.transform.position, Quaternion.Euler(0, 0, 0));
             Destroy(gameObject);
         }
         #endregion
 
         #region Visuals
+        
         if (target.position.x > transform.position.x && !handlesRotation)
         {
             EnemyGFX.GetComponent<SpriteRenderer>().flipX = true;
@@ -71,6 +74,7 @@ public class EnemyBase : MonoBehaviour, IDamageable
         {
             EnemyGFX.GetComponent<SpriteRenderer>().flipX = false;
         }
+
         #endregion
 
        

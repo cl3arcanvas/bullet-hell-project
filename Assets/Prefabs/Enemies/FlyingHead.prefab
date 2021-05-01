@@ -176,6 +176,8 @@ MonoBehaviour:
   maxHealth: 2
   health: 0
   damage: 5
+  deathEffect: {fileID: 2966447114885706475, guid: 4ec2508e932533145b0aeb37c1d54e71,
+    type: 3}
   idle: 1
   trigger:
     serializedVersion: 2

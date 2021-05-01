@@ -160,6 +160,8 @@ MonoBehaviour:
   maxHealth: 3
   health: 3
   damage: 1
+  deathEffect: {fileID: 2966447114885706475, guid: 4ec2508e932533145b0aeb37c1d54e71,
+    type: 3}
   idle: 0
   trigger:
     serializedVersion: 2
@@ -181,7 +183,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.023391992, y: -0.30686986}
+  m_Offset: {x: -0.035043865, y: -0.32201767}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -192,7 +194,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.53475755, y: 0.285609}
+  m_Size: {x: 0.75847787, y: 0.31590462}
   m_EdgeRadius: 0
 --- !u!50 &1533452397
 Rigidbody2D:
