@@ -299,14 +299,6 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 105737592}
     m_ColliderPaths:
-    - - X: -1210000000
-        Y: 630000000
-      - X: -1220000000
-        Y: 630000000
-      - X: -1220000000
-        Y: 620000000
-      - X: -1210000000
-        Y: 620000000
     - - X: 150000000
         Y: 200000000
       - X: 130000000
@@ -383,10 +375,6 @@ CompositeCollider2D:
         Y: 40000000
   m_CompositePaths:
     m_Paths:
-    - - {x: -121.00003, y: 62}
-      - {x: -121.00003, y: 63}
-      - {x: -122, y: 62.99997}
-      - {x: -121.99998, y: 62}
     - - {x: 14.999971, y: 16}
       - {x: 14.999971, y: 20}
       - {x: 13, y: 19.999971}
@@ -839,16 +827,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: -122, y: 62, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 8
-      m_TileSpriteIndex: 9
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 8
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 1
@@ -867,7 +845,7 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: 59f82b7419b39b54798141b6b89006cc, type: 2}
   - m_RefCount: 3
     m_Data: {fileID: 11400000, guid: a6eb2b294cf1436488f2c11119bb2fa8, type: 2}
-  - m_RefCount: 5
+  - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: ebdc48a7dbe8590409fe9604b81403d1, type: 2}
   - m_RefCount: 2
     m_Data: {fileID: 11400000, guid: 6a0eebaaa8209ab47aeb8454a1a24ef9, type: 2}
@@ -906,7 +884,7 @@ Tilemap:
   - m_RefCount: 3
     m_Data: {fileID: -2206189271908471107, guid: 308cb0327d82d1748b5a89d3f1c390f0,
       type: 3}
-  - m_RefCount: 5
+  - m_RefCount: 4
     m_Data: {fileID: -1608610720416775626, guid: 308cb0327d82d1748b5a89d3f1c390f0,
       type: 3}
   - m_RefCount: 2
@@ -922,7 +900,7 @@ Tilemap:
     m_Data: {fileID: -3382681762220368888, guid: 308cb0327d82d1748b5a89d3f1c390f0,
       type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 34
+  - m_RefCount: 33
     m_Data:
       e00: 1
       e01: 0
@@ -964,7 +942,7 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 0.0000000014887149, g: 0.0000000014887149, b: 0.0000000014887149,
       a: 0.0000000014887149}
-  - m_RefCount: 34
+  - m_RefCount: 33
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1

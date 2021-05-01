@@ -155,6 +155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hit: {fileID: 8239460782943918148}
   EnemyGFX: {fileID: 8239460781821231089}
+  handlesRotation: 0
   maxHealth: 7
   health: 3
   damage: 2
@@ -256,7 +257,7 @@ MonoBehaviour:
   version: 2
   radius: 0.5
   height: 2
-  repathRate: 0.5
+  repathRate: 0.2
   canSearch: 1
   canMove: 1
   maxSpeed: 4

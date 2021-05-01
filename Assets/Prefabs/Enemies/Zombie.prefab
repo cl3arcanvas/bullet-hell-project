@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3570900082171582631}
   - component: {fileID: 3570900082171582624}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 3570900083133244558}
   - component: {fileID: 3570900083133244562}
   - component: {fileID: 3570900083133244552}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,7 +210,7 @@ MonoBehaviour:
   version: 2
   radius: 0.5
   height: 3
-  repathRate: 0.5
+  repathRate: 0.2
   canSearch: 1
   canMove: 1
   maxSpeed: 3
@@ -281,7 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6243924506298350571}
   - component: {fileID: 6345115799280924202}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Randomize
   m_TagString: Untagged
   m_Icon: {fileID: 0}
